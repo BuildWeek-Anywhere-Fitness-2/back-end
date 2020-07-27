@@ -16,7 +16,7 @@ router.post('/', validateUser, (req, res) => {
   })
 });
 
-//find the users
+//find all the users
 router.get("/", (req,res) => {
   Users.find()
   .then(users => {
@@ -40,7 +40,7 @@ router.get('/:id', validateUserId, (req,res) => {
   })
 });
 
-//update user
+//update a user
 router.put('/:id', validateUserId, validateUser, (req, res) => {
   const changes = req.body;
   Users.update(req.params.id, changes)
@@ -53,7 +53,7 @@ router.put('/:id', validateUserId, validateUser, (req, res) => {
   })
 });
 
-//delete user
+//delete a user
 router.delete("/:id", validateUserId, (req, res) =>{
   Users.remove(req.params.id)
   .then(user => {
