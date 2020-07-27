@@ -65,6 +65,11 @@ router.delete("/:id", validateUserId, (req, res) =>{
   })
 });
 
+//USER can add a class
+
+//USER can delete a class
+
+
 //middleware validation
 function validateUser(req, res, next) {
   const body = req.body;
