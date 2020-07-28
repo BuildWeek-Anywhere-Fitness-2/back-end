@@ -10,7 +10,7 @@ const Trainers = require('../trainers/trainers-model.js')
 const { isUserValid, isTrainerValid } = require('./validate.js')
 
 //users
-router.post('/users/register', (req, res) => {
+router.post('/', (req, res) => {
   const credentials = req.body;
 
   if (isUserValid(credentials)) {
@@ -33,7 +33,7 @@ router.post('/users/register', (req, res) => {
 });
 
 //trainer
-router.post('/trainers/register', (req, res) => {
+router.post('/', (req, res) => {
   const credentials = req.body;
 
   if (isTrainerValid(credentials)) {
@@ -56,7 +56,7 @@ router.post('/trainers/register', (req, res) => {
 });
 
 //user login
-router.post('/users/login', (req, res) => {
+router.post('/', (req, res) => {
   const {username, password } = req.body;
 
   if (isUserValid(req.body)) {
@@ -81,7 +81,7 @@ router.post('/users/login', (req, res) => {
 
 
 //trainer login
-router.post('/trainers/login', (req, res) => {
+router.post('/', (req, res) => {
   const {name, password } = req.body;
 
   if (isTrainerValid(req.body)) {
@@ -112,7 +112,7 @@ function makeToken(user) {
     username: user.username
   };
 
-  const secret = process.env.JWT_SECRET || "keep it secret";
+  const secret = process.env.JWT_SECRET;
   const options = {
     expiresIn: '1h' //token expires in an hour
   };
@@ -127,7 +127,7 @@ function makeJwt(trainer) {
     name: trainer.name
   };
 
-  const secret = process.env.JWT_SECRET || "keep it secret";
+  const secret = process.env.JWT_SECRET;
   const options = {
     expiresIn: '1h' //token expires in an hour
   };
