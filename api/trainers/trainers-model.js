@@ -2,6 +2,7 @@ const db = require('../../data/db-config.js')
 
 module.exports = {
   find,
+  findBy,
   findById,
   findClasses,
   insert,
@@ -11,7 +12,11 @@ module.exports = {
 
 //find trainers
 function find() {
-  return db('trainers');
+  return db('trainers').select('id', 'name').orderBy('id');
+};
+
+function findBy(filter) {
+  return db('trainers').where(filter).orderBy('id')
 };
 
 //find trainers by id

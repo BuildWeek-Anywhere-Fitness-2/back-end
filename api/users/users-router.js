@@ -76,7 +76,7 @@ function validateUser(req, res, next) {
   const username = req.body.username;
 
   !body ? res.status(400).json({ message: "missing required user data" }):
-  !username ? res.staus(400).json({ message: "missing required username field" }):
+  !username ? res.status(400).json({ message: "missing required username field" }):
   next();
 };
 
