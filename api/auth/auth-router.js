@@ -6,13 +6,13 @@ const jwt = require('jsonwebtoken')
 //check users and trainers
 const Users = require('../users/users-model.js')
 const Trainers = require('../trainers/trainers-model.js')
-const Classes = require('../classes/classes-model.js')
 
 const { isUserValid, isTrainerValid } = require('./validate.js')
 
-//users
-router.post('/', (req, res) => {
+//users WORKS
+router.post('/registeruser', (req, res) => {
   const credentials = req.body;
+  console.log(credentials)
 
   if (isUserValid(credentials)) {
     const rounds = process.env.BCRYPT_ROUNDS || 12;
@@ -22,19 +22,22 @@ router.post('/', (req, res) => {
 
     Users.insert(credentials)
     .then(user => {
+      //console.log(user)
       const token = makeToken(user);
+      
       res.status(201).json({ data: user, token });
     })
     .catch(error => {
-      res.status(500).json({ message: 'There was an error getting a token' })
+      console.log(error)
+      res.status(500).json({ message: 'There was an error getting a token', error: error.message })
     })
   } else {
     res.status(400).json({ message: 'Please provide a valid username and password' })
   }
 });
 
-//trainer
-router.post('/', (req, res) => {
+// //trainer WORKS
+router.post('/registertrainer', (req, res) => {
   const credentials = req.body;
 
   if (isTrainerValid(credentials)) {
@@ -45,23 +48,24 @@ router.post('/', (req, res) => {
 
     Trainers.insert(credentials)
     .then(trainer => {
-      const token = makeToken(user);
+      const token = makeToken(trainer);
       res.status(201).json({ data: trainer, token });
     })
     .catch(error => {
-      res.status(500).json({ message: 'There was an error getting a token' })
+      console.log(error)
+      res.status(500).json(error.message)
     })
   } else {
     res.status(400).json({ message: 'Please provide a valid trainer username and password' })
   }
 });
 
-//user login
-router.post('/', (req, res) => {
+// user login WORKS
+router.post('/userlogin', (req, res) => {
   const {username, password } = req.body;
 
   if (isUserValid(req.body)) {
-    Users.find({ username: username })
+    Users.findBy({ username: username })
     .then(([user]) => {
       console.log('user', user);
       if(user && bcryptjs.compareSync(password, user.password)) {
@@ -81,12 +85,12 @@ router.post('/', (req, res) => {
 });
 
 
-//trainer login
-router.post('/', (req, res) => {
+// //trainer login WORKS
+router.post('/trainerlogin', (req, res) => {
   const {name, password } = req.body;
 
   if (isTrainerValid(req.body)) {
-    Trainers.find({ name: name })
+    Trainers.findBy({ name: name })
     .then(([trainer]) => {
       console.log('trainer', trainer);
       if(trainer && bcryptjs.compareSync(password, trainer.password)) {
@@ -105,7 +109,7 @@ router.post('/', (req, res) => {
   }
 });
 
-//token user
+//token user 
 
 function makeToken(user) {
   const payload = {
@@ -113,7 +117,7 @@ function makeToken(user) {
     username: user.username
   };
 
-  const secret = process.env.JWT_SECRET;
+  const secret = process.env.JWT_SECRET
   const options = {
     expiresIn: '1h' //token expires in an hour
   };
@@ -128,7 +132,7 @@ function makeJwt(trainer) {
     name: trainer.name
   };
 
-  const secret = process.env.JWT_SECRET;
+  const secret = process.env.JWT_SECRET
   const options = {
     expiresIn: '1h' //token expires in an hour
   };

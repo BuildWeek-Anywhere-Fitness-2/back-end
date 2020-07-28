@@ -5,7 +5,7 @@ const Users = require("./users-model.js");
 const Classes = require('../classes/classes-model.js')
 
 //add a user WORKS
-router.post('/register', validateUser, (req, res) => {
+router.post('/registeruser', (req, res) => {
   const userData = req.body
   Users.insert(userData)
   .then (result => {
