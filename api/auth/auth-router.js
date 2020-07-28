@@ -139,6 +139,20 @@ function makeJwt(trainer) {
   return jwt.sign(payload, secret, options);
 }
 
+//logout
+router.get("/logout", (req, res) => {
+  if (req.jwt) {
+   req.jwt.destroy(err => {
+      if (err) {
+        res.status(500).json({ message: "unable to log out" });
+      } else {
+        res.status(204).end();
+      }
+    });
+  } else {
+    res.status(204).end();
+  }
+});
 
 
 

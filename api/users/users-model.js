@@ -5,6 +5,7 @@ module.exports = {
  findBy,
  findById,
  findClasses,
+ getClassesById,
  insert,
  update,
  remove
@@ -50,3 +51,7 @@ function update(id, changes) {
 function remove(id) {
   return db('users').where('id', id).del();
 };
+
+function getClassesById(id) {
+  return db('classes').select("id", "name").where({userId: id});
+}

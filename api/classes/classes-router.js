@@ -92,7 +92,7 @@ function validateClass(req, res, next) {
     next();
 };
 
-//need to fix???
+
 function validateClassById(req, res, next) {
   Classes.findById(req.params.id)
   .then(resource => {

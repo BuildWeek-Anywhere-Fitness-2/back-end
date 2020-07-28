@@ -48,6 +48,4 @@ function remove (id) {
   return db('trainers').where('id', id).del();
 };
 
-//trainer can add a class
 
-//trainer deletes a class

@@ -66,9 +66,10 @@ router.delete("/:id", validateUserId, (req, res) =>{
   })
 });
 
-//USER can add a class
 
-//USER can delete a class
+//USER can add a class to their account
+
+//USER can delete a class freir account
 
 
 //middleware validation WORKS

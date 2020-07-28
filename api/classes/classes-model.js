@@ -14,6 +14,7 @@ function find() {
   return db('classes').select('id', 'name').orderBy('id');
 };
 
+//get classes
 function findBy(filter) {
   return db('classes').where(filter).orderBy('id')
 };
