@@ -41,7 +41,7 @@ router.get('/:id', validateUserId, (req,res) => {
 });
 
 //update a user
-router.put('/:id', validateUserId, validateUser, (req, res) => {
+router.put('/:id', validateUserId, (req, res) => {
   const changes = req.body;
   Users.update(req.params.id, changes)
   .then(updated => {
@@ -72,11 +72,13 @@ router.delete("/:id", validateUserId, (req, res) =>{
 
 //middleware validation
 function validateUser(req, res, next) {
-  const body = req.body;
   const username = req.body.username;
+  const password = req.body.password;
+  const email = req.body.email;
 
-  !body ? res.status(400).json({ message: "missing required user data" }):
   !username ? res.status(400).json({ message: "missing required username field" }):
+  !password ? res.status(400).json({ message: "missing required password field" }):
+  !email ? res.status(400).json({ message: "missing required email field" }):
   next();
 };
 

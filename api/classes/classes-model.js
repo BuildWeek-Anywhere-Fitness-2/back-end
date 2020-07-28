@@ -19,7 +19,7 @@ function findBy(filter) {
 };
 
 //get classes by id
-function findById() {
+function findById(id) {
   return db('classes').where({ id }).first();
 };
 

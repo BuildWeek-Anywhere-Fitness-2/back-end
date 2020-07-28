@@ -20,7 +20,7 @@ function findBy(filter) {
 };
 
 //find trainers by id
-function findById() {
+function findById(id) {
   return db('trainers').where({ id }).first();
 };
 

@@ -18,7 +18,7 @@ function findBy(filter) {
   return db('users').where(filter).orderBy('id')
 };
 
-function findById() {
+function findById(id) {
   return db('users').where({ id }).first();
 };
 
@@ -33,12 +33,14 @@ function findClasses(userId) {
   .where('classes.user_id', userId)
 };
 
-function insert(user) {
-  return db('users')
-  .insert(user)
-  .then(ids => {
-    return findById(ids[0]);
-  })
+async function insert(user) {
+ try {
+   const [id] = await db('users').insert(user, 'id');
+
+   return findById(id);
+ } catch(error){
+   throw error;
+ }
 };
 
 function update(id, changes) {
