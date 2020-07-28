@@ -26,11 +26,15 @@ function findById(id) {
 //create a new class
 function insert(newClass){
   return db('classes')
-  .insert(newClass)
-  .then(ids => {
-    return findById(ids[0]);
-  })
-}
+  .insert(newClass, 
+    ['id', 
+    'name', 
+    'description', 
+    'start',
+    'end', 
+    'trainer_id',
+    'user_id'])
+};
 
 //update classes
 function update(id, changes) {

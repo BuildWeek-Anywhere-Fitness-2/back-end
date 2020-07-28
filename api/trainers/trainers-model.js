@@ -35,10 +35,7 @@ function findClasses(trainerId) {
 //add trainer
 function insert(trainer) {
   return db('trainers')
-  .insert(trainer)
-  .then(ids => {
-    return findById(ids[0]);
-  })
+  .insert(trainer, ['name', 'password', 'email', 'bio' ])
 };
 
 //update trainer
