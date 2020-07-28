@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 //check users and trainers
 const Users = require('../users/users-model.js')
 const Trainers = require('../trainers/trainers-model.js')
+const Classes = require('../classes/classes-model.js')
 
 const { isUserValid, isTrainerValid } = require('./validate.js')
 

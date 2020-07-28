@@ -40,7 +40,7 @@ router.get('/:id', validateTrainerId, (req, res) => {
   })
 });
 
-//update trainer
+//update trainer WORKS
 router.put('/:id', validateTrainerId, (req, res) => {
   const changes = req.body;
   Trainers.update(req.params.id, changes)

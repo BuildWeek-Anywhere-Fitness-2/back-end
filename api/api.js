@@ -1,5 +1,9 @@
 const apiRouter = require("express").Router()
 
+//don't see unless logged in
+
+const restricted =require('./auth/authenticate-middleware.js')
+
 //add all Routers
 const authRouter = require("./auth/auth-router")
 const classesRouter = require('./classes/classes-router')
@@ -9,9 +13,9 @@ const usersRouter = require('./users/users-router')
 
 //add all API endpoints
 apiRouter.use("/auth", authRouter)
-apiRouter.use('/classes', classesRouter)
-apiRouter.use('/trainers', trainersRouter)
-apiRouter.use('/users', usersRouter)
+apiRouter.use('/classes', classesRouter) //add restricted
+apiRouter.use('/trainers', trainersRouter) //add restricted
+apiRouter.use('/users', usersRouter)//add restricted
 
 
 apiRouter.get("/", (req, res) => {

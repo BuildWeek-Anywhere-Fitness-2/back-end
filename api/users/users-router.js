@@ -1,5 +1,5 @@
 require('dotenv').config()
-const router = require('express').Router()
+const router = require('express').Router();
 
 const Users = require("./users-model.js");
 const Classes = require('../classes/classes-model.js')
@@ -17,10 +17,10 @@ router.post('/', validateUser, (req, res) => {
 });
 
 //find all the users WORKS
-router.get("/", (req,res) => {
+router.get("/", (req, res) => {
   Users.find()
   .then(users => {
-    res.status(200).json(users)
+    res.status(200).json({users, jwt: req.jwt })
   })
   .catch(error => {
     console.log(error)
@@ -32,7 +32,7 @@ router.get("/", (req,res) => {
 router.get('/:id', validateUserId, (req,res) => {
   Users.findById(req.params.id)
   .then(user => {
-    res.status(200).json(user)
+    res.status(200).json({users, jwt: req.jwt })
   })
   .catch(error => {
     console.log(error)
