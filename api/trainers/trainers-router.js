@@ -5,7 +5,7 @@ const Trainers = require('../trainers/trainers-model.js')
 const Classes = require('../classes/classes-model.js')
 
 //add trainer
-router.post('/', validateTrainer, (req, res) => {
+router.post('/trainers/', validateTrainer, (req, res) => {
   Trainers.insert({ name: req.body.name })
   .then(result => {
     res.status(201).json(result)
@@ -17,7 +17,7 @@ router.post('/', validateTrainer, (req, res) => {
 });
 
 //find all trainers
-router.get('/', (req, res) => {
+router.get('/trainers/', (req, res) => {
   Trainers.find()
   .then(trainers => {
     res.status(200).json(trainers)
@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
 });
 
 //find trainer by id
-router.get('/:id', validateTrainerId, (req, res) => {
+router.get('/trainers/:id', validateTrainerId, (req, res) => {
   Trainers.findById(req.params.id)
   .then(trainer => {
     res.status(200).json(trainer)
@@ -41,7 +41,7 @@ router.get('/:id', validateTrainerId, (req, res) => {
 });
 
 //update trainer
-router.put('/:id', validateTrainerId, validateTrainer, (req, res) => {
+router.put('/trainers/:id', validateTrainerId, validateTrainer, (req, res) => {
   const changes = req.body;
   Trainers.update(req.params.id, changes)
   .then(updated => {
@@ -54,7 +54,7 @@ router.put('/:id', validateTrainerId, validateTrainer, (req, res) => {
 });
 
 //delete trainer
-router.delete('/:id', validateTrainerId, (req,res) => {
+router.delete('/trainers/:id', validateTrainerId, (req,res) => {
   Trainers.remove(req.params.id)
   .then(trainer => {
     res.status(204).json({ message: `${trainer} successfully deleted.`})

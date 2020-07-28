@@ -1,7 +1,7 @@
 module.exports = (req, res, next) => {
   const token = req.headers.authorization;
   //figure out how to put in env file
-  const secret = process.env.JWT_SECRET || "keep it secrect";
+  const secret = process.env.JWT_SECRET || "keep it secret";
   console.log(token) //for troubleshooting delete later
   
   if(token) {

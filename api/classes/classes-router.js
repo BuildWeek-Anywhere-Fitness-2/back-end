@@ -5,7 +5,7 @@ const Classes = require('../classes/classes-model.js');
 const { update } = require('../../data/db-config.js');
 
 //add a class
-router.post('/', validateClass, (req, res, next) => {
+router.post('/classes/', validateClass, (req, res, next) => {
   Classes.insert(req.params)
   .then (newClass => {
     res.status(201).json(newClass)
@@ -17,7 +17,7 @@ router.post('/', validateClass, (req, res, next) => {
 });
 
 //get all classes
-router.get('/', (req, res, next) => {
+router.get('/classes/', (req, res, next) => {
   Classes.find()
   .then(classes => {
     res.status(200).json(classes)
@@ -29,7 +29,7 @@ router.get('/', (req, res, next) => {
 });
 
 //get class by id
-router.get('/:id', validateClassById, (req, res, next) => {
+router.get('/classes/:id', validateClassById, (req, res, next) => {
   Classes.findById(req.params.id)
   .then( theClass => {
     res.status(200).json({theClass})
@@ -41,7 +41,7 @@ router.get('/:id', validateClassById, (req, res, next) => {
 });
 
 //update a class
-router.put('/:id', validateClassById, validateClass, (req, res, next) => {
+router.put('/classes/:id', validateClassById, validateClass, (req, res, next) => {
   const changes = req.body
   Classes.update(req.params.id, changes)
   .then(updated => {
@@ -54,7 +54,7 @@ router.put('/:id', validateClassById, validateClass, (req, res, next) => {
 });
 
 //remove a class
-router.delete('/:id', validateClassById,  validateClass, (req, res, next) => {
+router.delete('/classes/:id', validateClassById,  validateClass, (req, res, next) => {
   Classes.remove(req.params.id)
   .then(theClass => {
     res.status(204).json({ message: `${theClass} was successfully deleted.` })
