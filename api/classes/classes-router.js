@@ -2,11 +2,13 @@ require('dotenv').config()
 const router = require('express').Router()
 
 const Classes = require('../classes/classes-model.js');
-const { update } = require('../../data/db-config.js');
 
-//add a class
-router.post('/classes/', validateClass, (req, res, next) => {
-  Classes.insert(req.params)
+
+//add a class WORKS (sorta says it doesn't create it but it is there)
+//tried removing validation but same result
+router.post('/register', validateClass, (req, res, next) => {
+  const classData = req.body
+  Classes.insert(classData)
   .then (newClass => {
     res.status(201).json(newClass)
   })
@@ -17,7 +19,7 @@ router.post('/classes/', validateClass, (req, res, next) => {
 });
 
 //get all classes
-router.get('/classes/', (req, res, next) => {
+router.get('/', (req, res, next) => {
   Classes.find()
   .then(classes => {
     res.status(200).json(classes)
@@ -29,7 +31,7 @@ router.get('/classes/', (req, res, next) => {
 });
 
 //get class by id
-router.get('/classes/:id', validateClassById, (req, res, next) => {
+router.get('/:id', validateClassById, (req, res, next) => {
   Classes.findById(req.params.id)
   .then( theClass => {
     res.status(200).json({theClass})
@@ -41,7 +43,7 @@ router.get('/classes/:id', validateClassById, (req, res, next) => {
 });
 
 //update a class
-router.put('/classes/:id', validateClassById, validateClass, (req, res, next) => {
+router.put('/:id', validateClassById, (req, res, next) => {
   const changes = req.body
   Classes.update(req.params.id, changes)
   .then(updated => {
@@ -54,7 +56,7 @@ router.put('/classes/:id', validateClassById, validateClass, (req, res, next) =>
 });
 
 //remove a class
-router.delete('/classes/:id', validateClassById,  validateClass, (req, res, next) => {
+router.delete('/:id', validateClassById, (req, res, next) => {
   Classes.remove(req.params.id)
   .then(theClass => {
     res.status(204).json({ message: `${theClass} was successfully deleted.` })
@@ -68,34 +70,34 @@ router.delete('/classes/:id', validateClassById,  validateClass, (req, res, next
 //middleware validation for classes
 
 function validateClass(req, res, next) {
-  const body = req.body;
+ 
   const description = req.body.description;
   const name = req.body.name;
   const start = req.body.start;
   const end = req.body.end;
 
-  !body ? res.status(400).json({ 
-    message: "Missing class name, description, start and end time." }):
-    !description ? res.status(400).json({ 
-      message: "Missing class description."
+
+    !name ? res.status(400).json({ 
+      message: "Missing required class name."
      }):
-    !name ? res.status(400).json({
-      message: "Missing class name."
+    !description ? res.status(400).json({
+      message: "Missing required class description."
     }):
     !start ? res.status(400).json({ 
-      message: 'Missing class start time.'
+      message: 'Missing required class start time.'
     }):
     !end ? res.status(400).json({
-      message: 'Missing class end time.'
+      message: 'Missing required class end time.'
     }):
     next();
 };
 
+//need to fix???
 function validateClassById(req, res, next) {
   Classes.findById(req.params.id)
   .then(resource => {
       if(resource){
-        req.class = resource;
+        req.params = resource;
         next();
       }else{
         res.status(400).json({ message: 'Invalid class ID' })

@@ -3,17 +3,17 @@ exports.up = function(knex) {
   return knex.schema
   .createTable('users', tbl => {
     tbl.increments(); //ID auto primary key
-    tbl.text('username', 128).notNullable(); //required username
+    tbl.text('username', 128).notNullable().unique(); //required unique username
     tbl.text('password', 255).notNullable(); //required password
-    tbl.text('email', 255).notNullable(); //required email
+    tbl.text('email', 255).notNullable().unique(); //required unique email
     tbl.text('bio', 255)
   })
 
   .createTable('trainers', tbl => {
     tbl.increments(); //ID auto primary key
-    tbl.text('name', 128).notNullable(); //required name
+    tbl.text('name', 128).notNullable().unique(); //required unique name
     tbl.text('password', 255).notNullable(); //required password
-    tbl.text('email', 255).notNullable(); //required email
+    tbl.text('email', 255).notNullable().unique(); //required unique email
     tbl.text('bio', 255)
   })
 

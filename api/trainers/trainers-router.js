@@ -4,9 +4,10 @@ const router = require('express').Router()
 const Trainers = require('../trainers/trainers-model.js')
 const Classes = require('../classes/classes-model.js')
 
-//add trainer
-router.post('/', validateTrainer, (req, res) => {
-  Trainers.insert({ name: req.body.name })
+//add trainer WORKS (sorta...says it doesn't but it is created)
+router.post('/register', validateTrainer, (req, res) => {
+  const trainerData = req.body
+  Trainers.insert(trainerData)
   .then(result => {
     res.status(201).json(result)
   })
