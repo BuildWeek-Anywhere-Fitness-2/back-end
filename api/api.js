@@ -15,6 +15,6 @@ apiRouter.use('/users', usersRouter)
 
 
 apiRouter.get("/", (req, res) => {
-    res.status(200).json({message: "available endpoints, recipes, auth", error: false})
+    res.status(200).json({message: "available endpoints, classes, trainers, users, auth", error: false})
 })
 module.exports = apiRouter
