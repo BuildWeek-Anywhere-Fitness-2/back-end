@@ -4,7 +4,7 @@ const router = require('express').Router()
 const Users = require("./users-model.js");
 const Classes = require('../classes/classes-model.js')
 
-//add a user
+//add a user 
 router.post('/', validateUser, (req, res) => {
   Users.insert({ username: req.body.username })
   .then (result => {
@@ -16,7 +16,7 @@ router.post('/', validateUser, (req, res) => {
   })
 });
 
-//find all the users
+//find all the users WORKS
 router.get("/", (req,res) => {
   Users.find()
   .then(users => {
@@ -28,7 +28,7 @@ router.get("/", (req,res) => {
   })
 });
 
-//find the users by id
+//find the users by id WORKS
 router.get('/:id', validateUserId, (req,res) => {
   Users.findById(req.params.id)
   .then(user => {
@@ -40,7 +40,7 @@ router.get('/:id', validateUserId, (req,res) => {
   })
 });
 
-//update a user
+//update a user WORKS
 router.put('/:id', validateUserId, (req, res) => {
   const changes = req.body;
   Users.update(req.params.id, changes)
@@ -53,7 +53,7 @@ router.put('/:id', validateUserId, (req, res) => {
   })
 });
 
-//delete a user
+//delete a user WORKS
 router.delete("/:id", validateUserId, (req, res) =>{
   Users.remove(req.params.id)
   .then(user => {
@@ -70,7 +70,7 @@ router.delete("/:id", validateUserId, (req, res) =>{
 //USER can delete a class
 
 
-//middleware validation
+//middleware validation WORKS
 function validateUser(req, res, next) {
   const username = req.body.username;
   const password = req.body.password;

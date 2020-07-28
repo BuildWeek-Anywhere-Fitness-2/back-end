@@ -16,7 +16,7 @@ router.post('/', validateTrainer, (req, res) => {
   })
 });
 
-//find all trainers
+//find all trainers WORKS
 router.get('/', (req, res) => {
   Trainers.find()
   .then(trainers => {
@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
   })
 });
 
-//find trainer by id
+//find trainer by id WORKS
 router.get('/:id', validateTrainerId, (req, res) => {
   Trainers.findById(req.params.id)
   .then(trainer => {
@@ -41,7 +41,7 @@ router.get('/:id', validateTrainerId, (req, res) => {
 });
 
 //update trainer
-router.put('/:id', validateTrainerId, validateTrainer, (req, res) => {
+router.put('/:id', validateTrainerId, (req, res) => {
   const changes = req.body;
   Trainers.update(req.params.id, changes)
   .then(updated => {
@@ -53,7 +53,7 @@ router.put('/:id', validateTrainerId, validateTrainer, (req, res) => {
   })
 });
 
-//delete trainer
+//delete trainer WORKS
 router.delete('/:id', validateTrainerId, (req,res) => {
   Trainers.remove(req.params.id)
   .then(trainer => {
@@ -69,13 +69,15 @@ router.delete('/:id', validateTrainerId, (req,res) => {
 
 //trainer deletes class
 
-//middleware validation
+//middleware validation WORKS
 function validateTrainer(req, res, next){
-  const body = req.body;
   const name = req.body.name;
+  const password = req.body.password;
+  const email = req.body.email;
 
-  !body ? res.status(400).json({ message: "missing required trainer data" }):
-  !name ? res.status(400).json({ message: "missing required trainer account name"}):
+  !name ? res.status(400).json({ message: "missing required trainer name field" }):
+  !password ? res.status(400).json({ message: "missing required password field" }):
+  !email ? res.status(400).json({ message: "missing required email field" }):
   next();
 };
 
