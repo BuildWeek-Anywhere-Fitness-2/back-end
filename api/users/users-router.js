@@ -5,7 +5,7 @@ const Users = require("./users-model.js");
 const Classes = require('../classes/classes-model.js')
 
 //add a user
-router.post('/users/', validateUser, (req, res) => {
+router.post('/', validateUser, (req, res) => {
   Users.insert({ username: req.body.username })
   .then (result => {
     res.status(201).json(result)
@@ -17,7 +17,7 @@ router.post('/users/', validateUser, (req, res) => {
 });
 
 //find all the users
-router.get("/users/", (req,res) => {
+router.get("/", (req,res) => {
   Users.find()
   .then(users => {
     res.status(200).json(users)
@@ -29,7 +29,7 @@ router.get("/users/", (req,res) => {
 });
 
 //find the users by id
-router.get('/users/:id', validateUserId, (req,res) => {
+router.get('/:id', validateUserId, (req,res) => {
   Users.findById(req.params.id)
   .then(user => {
     res.status(200).json(user)
@@ -41,7 +41,7 @@ router.get('/users/:id', validateUserId, (req,res) => {
 });
 
 //update a user
-router.put('/users/:id', validateUserId, validateUser, (req, res) => {
+router.put('/:id', validateUserId, validateUser, (req, res) => {
   const changes = req.body;
   Users.update(req.params.id, changes)
   .then(updated => {
@@ -54,7 +54,7 @@ router.put('/users/:id', validateUserId, validateUser, (req, res) => {
 });
 
 //delete a user
-router.delete("/users/:id", validateUserId, (req, res) =>{
+router.delete("/:id", validateUserId, (req, res) =>{
   Users.remove(req.params.id)
   .then(user => {
     res.status(204).json({ message: `${user} successfully deleted.` })
