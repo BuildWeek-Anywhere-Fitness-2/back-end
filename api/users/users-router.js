@@ -4,9 +4,10 @@ const router = require('express').Router();
 const Users = require("./users-model.js");
 const Classes = require('../classes/classes-model.js')
 
-//add a user 
-router.post('/', validateUser, (req, res) => {
-  Users.insert({ username: req.body.username })
+//add a user WORKS
+router.post('/', (req, res) => {
+  const userData = req.body
+  Users.insert(userData)
   .then (result => {
     res.status(201).json(result)
   })
