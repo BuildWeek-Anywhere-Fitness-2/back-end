@@ -12,7 +12,7 @@ const { isUserValid, isTrainerValid } = require('./validate.js')
 //users WORKS
 router.post('/registeruser', (req, res) => {
   const credentials = req.body;
-  console.log(credentials)
+
 
   if (isUserValid(credentials)) {
     const rounds = process.env.BCRYPT_ROUNDS || 12;
@@ -22,7 +22,7 @@ router.post('/registeruser', (req, res) => {
 
     Users.insert(credentials)
     .then(user => {
-      //console.log(user)
+   
       const token = makeToken(user);
       
       res.status(201).json({ data: user, token });

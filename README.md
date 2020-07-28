@@ -1,6 +1,6 @@
 # back-end
 
-SetUp
+Documentation for Endpoints
 
 [] user database
 [] trainer database

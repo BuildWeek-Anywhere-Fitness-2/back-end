@@ -43,7 +43,6 @@ function findClasses(userId) {
   .where('classes.user_id', userId)
 };
 
-
 function update(id, changes) {
   return db('users').where({ id }).update(changes);
 };
