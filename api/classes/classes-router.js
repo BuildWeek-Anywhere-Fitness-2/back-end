@@ -6,7 +6,7 @@ const Classes = require('../classes/classes-model.js');
 
 //add a class WORKS (sorta says it doesn't create it but it is there)
 //tried removing validation but same result
-router.post('/register', validateClass, (req, res, next) => {
+router.post('/', validateClass, (req, res, next) => {
   const classData = req.body
   Classes.insert(classData)
   .then (newClass => {
