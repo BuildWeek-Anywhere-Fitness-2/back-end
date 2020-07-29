@@ -38,8 +38,7 @@ exports.up = function(knex) {
   
 };
 
-//User adds class to schedule inserting (db schedule)
-//db classes for the user to access classes ( db classes) give cl
+
 
 exports.down = function(knex) {
   return knex.schema

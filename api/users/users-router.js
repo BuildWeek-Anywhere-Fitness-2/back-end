@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
 //find the users by id WORKS
 router.get('/:id', validateUserId, (req,res) => {
   Users.findById(req.params.id)
-  .then(user => {
+  .then(users => {
     res.status(200).json({users, jwt: req.jwt })
   })
   .catch(error => {
@@ -68,11 +68,11 @@ router.delete("/:id", validateUserId, (req, res) =>{
 });
 
 //USER can see their class list
-router.get('/:id/classes', (req,res) => {
+router.get('/:id/schedule', (req,res) => {
   Users.getClassesById(req.params.id)
-  .then(classes => {
-    !classes[0] ? res.status(404).json({ message: "User with that ID does not exist" }):
-    res.status(200).json({ data: classes, jwt: req.jwt });
+  .then(schedule => {
+    !schedule[0] ? res.status(404).json({ message: "User with that ID does not exist" }):
+    res.status(200).json({ data: schedule, jwt: req.jwt });
   })
   .catch(error => {
     console.log(error)
@@ -81,7 +81,7 @@ router.get('/:id/classes', (req,res) => {
 })
 
 //USER can add a class to their account
-router.post('/:id/classes', (req, res) => {
+router.post('/:id/schedule', (req, res) => {
   const userId = req.params.id
   //const { trainer_id, class_id } = req.body //pull trainer id and class id with get request and programtically put it in there 
   req.body.userId = userId //all params in 
