@@ -24,7 +24,11 @@ function findBy(filter) {
 
 //get schedule by id
 function findById(id) {
-  return db('schedules').where({ id }).first();
+  return db('schedules')
+  .join('classes',  'schedules.class_id', 'classes.id')
+  .join('trainers', 'schedules.trainer_id', 'trainers.id')
+  .select('classes.name as Class', 'classes.start as Start', 'classes.end as End','trainers.name as Trainer')
+  .where({ id }).first();
 };
 
 //add a new class to schedule

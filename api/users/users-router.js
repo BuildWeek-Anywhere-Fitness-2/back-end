@@ -69,7 +69,7 @@ router.delete("/:id", validateUserId, (req, res) =>{
 
 //USER can see their class list
 router.get('/:id/schedule', (req,res) => {
-  Users.getClassesById(req.params.id)
+  Users.getScheduleById(req.params.id)
   .then(schedule => {
     !schedule[0] ? res.status(404).json({ message: "User with that ID does not exist" }):
     res.status(200).json({ data: schedule, jwt: req.jwt });

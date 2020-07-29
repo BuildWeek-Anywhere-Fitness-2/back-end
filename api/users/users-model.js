@@ -5,7 +5,7 @@ module.exports = {
  findBy,
  findById,
  findClasses,
- getClassesById,
+ getScheduleById,
  addClass,
  insert,
  update,
@@ -53,8 +53,15 @@ function remove(id) {
   return db('users').where('id', id).del();
 };
 
-function getClassesById(id) {
-  return db('classes').select("id", "name").where({userId: id});
+//get the users id
+//join the schedules and user id in schedules ahould match user id 
+function getScheduleById(id) {
+  return db('users')
+  .join('schedules', 'schedules.user_id', 'users.id')
+  .join('classes',  'schedules.class_id', 'classes.id')
+  .join('trainers', 'schedules.trainer_id', 'trainers.id')
+  .select('classes.name as Class', 'classes.start as Start', 'classes.end as End','trainers.name as Trainer')
+  .where({ 'users.id': id });
 }
 
 //user add class
