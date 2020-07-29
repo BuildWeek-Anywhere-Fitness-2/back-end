@@ -7,7 +7,8 @@ module.exports = {
   findClasses,
   insert,
   update,
-  remove
+  remove,
+  getClassesById
 };
 
 //find trainers
@@ -48,4 +49,6 @@ function remove (id) {
   return db('trainers').where('id', id).del();
 };
 
-
+function getClassesById(id) {
+  return db('classes').select("id", "name").where({userId: id});
+}

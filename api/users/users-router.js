@@ -5,7 +5,7 @@ const Users = require("./users-model.js");
 const Classes = require('../classes/classes-model.js')
 
 //add a user WORKS
-router.post('/registeruser', (req, res) => {
+router.post('/registeruser', validateUser, (req, res) => {
   const userData = req.body
   Users.insert(userData)
   .then (result => {
@@ -66,7 +66,19 @@ router.delete("/:id", validateUserId, (req, res) =>{
   })
 });
 
+//USER can see their class list
 
+router.get('/:id/classes', req,res => {
+  Users.getClassesById(req.params.id)
+  .then(classes => {
+    !classes[0] ? res.status(404).json({ message: "User with that ID does not exist" }):
+    res.status(200).json({ data: classes, jwt: req.jwt });
+  })
+  .catch(error => {
+    console.log(error)
+    res.status(500).json({ message: "Information could not be found", error: error.message })
+  })
+})
 //USER can add a class to their account
 
 //USER can delete a class freir account

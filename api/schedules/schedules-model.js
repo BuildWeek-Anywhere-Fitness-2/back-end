@@ -1,33 +1,35 @@
 const db = require('../../data/db-config.js')
 
-
 module.exports = {
   find,
   findBy,
   findById,
-  insert,
+  addClasses,
   update,
   remove
 };
 
-//get class list
+//get schedules list
 function find() {
-  return db('classes').select('id', 'name').orderBy('id');
+  return db('schedules');
 };
 
-//get classes
+//get schedules
 function findBy(filter) {
-  return db('classes').where(filter).orderBy('id')
+  return db('schedules').where(filter).orderBy('id')
 };
 
-//get classes by id
+//get schedule by id
 function findById(id) {
-  return db('classes').where({ id }).first();
+  return db('schedules').where({ id }).first();
 };
 
-//create a new class
-function insert(newClass){
-  return db('classes')
+//add a new class to schedule
+//get the schedule db
+//add a class from classes db
+//
+function addClasses(newClass){
+  return db('schedule')
   .insert(newClass, 
     ['id', 
     'name', 
@@ -38,12 +40,12 @@ function insert(newClass){
     'user_id'])
 };
 
-//update classes
+//update schedule
 function update(id, changes) {
-  return db('classes').where({ id }).update(changes);
+  return db('schedules').where({ id }).update(changes);
 };
 
-//delete classes
+//delete classes from schedule
 function remove (id) {
-  return db('classes').where('id', id).del();
+  return db('schedules').where('id', id).del();
 };
