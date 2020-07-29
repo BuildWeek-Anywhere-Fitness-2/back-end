@@ -8,7 +8,7 @@ exports.seed = function(knex) {
       return knex('trainers').insert([
         {name: 'trainer1', password: 'abc1', email: 'email1@email.com'},
         {name: 'trainer2', password: 'abc2', email: 'email2@email.com'},
-        {name: 'trainer3', password: 'abc3', email: 'email3@email.com'},
+        {name: 'trainer3', password: 'abc3', email: 'email3@email.com', bio: 'blah blah'},
       ]);
     });
 };

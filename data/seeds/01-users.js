@@ -7,7 +7,7 @@ exports.seed = function(knex) {
       //one to many
       return knex('users').insert([
         {username: 'user1', password: 'abc1', email: 'email1@email.com'},
-        {username: 'user2', password: 'abc2', email: 'email2@email.com'},
+        {username: 'user2', password: 'abc2', email: 'email2@email.com', bio: 'blah'},
         {username: 'user3', password: 'abc3', email: 'email3@email.com'},
       ]);
     });
