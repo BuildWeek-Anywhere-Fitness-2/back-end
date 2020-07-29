@@ -18,7 +18,7 @@ apiRouter.use("/auth", authRouter)
 apiRouter.use('/classes', /*restricted,*/ classesRouter) //add restricted
 apiRouter.use('/trainers', /*restricted,*/  trainersRouter) //add restricted
 apiRouter.use('/users', /*restricted,*/  usersRouter)//add restricted
-apiRouter.use('/schedules', /*restricted,*/  schedulesRouter)//add restricted
+apiRouter.use('/schedules', schedulesRouter)//add restricted
 
 
 apiRouter.get("/", (req, res) => {

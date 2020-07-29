@@ -60,7 +60,7 @@ function getScheduleById(id) {
   .join('schedules', 'schedules.user_id', 'users.id')
   .join('classes',  'schedules.class_id', 'classes.id')
   .join('trainers', 'schedules.trainer_id', 'trainers.id')
-  .select('classes.name as Class', 'classes.start as Start', 'classes.end as End','trainers.name as Trainer')
+  .select('schedules.id','classes.name as Class', 'classes.start as Start', 'classes.end as End','trainers.name as Trainer')
   .where({ 'users.id': id });
 }
 

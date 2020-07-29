@@ -4,21 +4,21 @@ const router = require('express').Router()
 const Schedules = require('../schedules/schedules-model.js');
 //const Classes = require('../classes/classes-model.js');
 
+//Couldn't figure this one out yet
+// //add to schedule
+// router.post('/', (req, res, next) => {
+//   const classData = req.body
+//   Schedules.add(classData)
+//   .then (newClass => {
+//     res.status(201).json(newClass)
+//   })
+//   .catch(error => {
+//     console.log(error)
+//     res.status(500).json({ message: "Schedule could not be created." })
+//   })
+// });
 
-//add to schedule
-router.post('/', (req, res, next) => {
-  const classData = req.body
-  Schedules.add(classData)
-  .then (newClass => {
-    res.status(201).json(newClass)
-  })
-  .catch(error => {
-    console.log(error)
-    res.status(500).json({ message: "Schedule could not be created." })
-  })
-});
-
-//get all classes schedules
+//get all classes schedules WORKS
 router.get('/', (req, res, next) => {
   Schedules.find()
   .then(schedule => {
@@ -30,7 +30,7 @@ router.get('/', (req, res, next) => {
   })
 });
 
-//get class schedule by id
+//get class schedule by id WORKS
 router.get('/:id', (req, res, next) => {
   Schedules.findById(req.params.id)
   .then( theClass => {

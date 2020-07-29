@@ -67,7 +67,7 @@ router.delete("/:id", validateUserId, (req, res) =>{
   })
 });
 
-//USER can see their class list
+//USER can see their class list WORKS
 router.get('/:id/schedule', (req,res) => {
   Users.getScheduleById(req.params.id)
   .then(schedule => {
@@ -80,12 +80,14 @@ router.get('/:id/schedule', (req,res) => {
   })
 })
 
+
+
 //USER can add a class to their account
 router.post('/:id/schedule', (req, res) => {
   const userId = req.params.id
   //const { trainer_id, class_id } = req.body //pull trainer id and class id with get request and programtically put it in there 
   req.body.userId = userId //all params in 
-  Schedules.addClasses(req.body)
+  Schedules.addClassSchedule(req.body)
   .then( newClass => {
     res.status(201).json({ newClass, message: "Class added" })
   })
@@ -96,9 +98,9 @@ router.post('/:id/schedule', (req, res) => {
 })
 
 //USER can delete a class from account
-router.delete('/userId/classes/:id', (req, res) => {
+router.delete('/:id/schedule/:id', (req, res) => {
   const { id } = req.params
-  Schedules.remove(id)
+  Schedules.removeScheduledClass(id)
   .then( deleteClass => {
     res.status(204).json({ deleteClass, message: "Class deleted."})
   })
