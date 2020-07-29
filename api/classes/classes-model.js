@@ -14,6 +14,7 @@ function find() {
   return db('classes').select('id', 'name').orderBy('id');
 };
 
+//get classes by whatever choose certain parameter to look for
 function findBy(filter) {
   return db('classes').where(filter).orderBy('id')
 };
@@ -32,8 +33,7 @@ function insert(newClass){
     'description', 
     'start',
     'end', 
-    'trainer_id',
-    'user_id'])
+    'trainer_id'])
 };
 
 //update classes

@@ -2,10 +2,11 @@ require('dotenv').config()
 const router = require('express').Router();
 
 const Users = require("./users-model.js");
-const Classes = require('../classes/classes-model.js')
+//const Classes = require('../classes/classes-model.js')
+const Schedules = require('../schedules/schedules-model')
 
 //add a user WORKS
-router.post('/registeruser', (req, res) => {
+router.post('/registeruser', validateUser, (req, res) => {
   const userData = req.body
   Users.insert(userData)
   .then (result => {
@@ -32,7 +33,7 @@ router.get("/", (req, res) => {
 //find the users by id WORKS
 router.get('/:id', validateUserId, (req,res) => {
   Users.findById(req.params.id)
-  .then(user => {
+  .then(users => {
     res.status(200).json({users, jwt: req.jwt })
   })
   .catch(error => {
@@ -66,9 +67,52 @@ router.delete("/:id", validateUserId, (req, res) =>{
   })
 });
 
-//USER can add a class
+//USER can see their class list WORKS
+router.get('/:id/schedule', (req,res) => {
+  Users.getScheduleById(req.params.id)
+  .then(schedule => {
+    !schedule[0] ? res.status(404).json({ message: "User with that ID does not exist" }):
+    res.status(200).json({ data: schedule, jwt: req.jwt });
+  })
+  .catch(error => {
+    console.log(error)
+    res.status(500).json({ message: "Information could not be found", error: error.message })
+  })
+})
 
-//USER can delete a class
+
+//Couldn't figure out this one yet
+//USER can add a class to their account
+// router.post('/:id/schedule', (req, res) => {
+//   const userId = req.params.id
+//   //const { trainer_id, class_id } = req.body //pull trainer id and class id with get request and programtically put it in there 
+//   req.body.userId = userId //all params in 
+//   Schedules.addClassSchedule(req.body)
+//   .then( newClass => {
+//     res.status(201).json({ newClass, message: "Class added" })
+//   })
+//   .catch( error => {
+//     console.log(error.message)
+//     res.status(500).json({ error, message: "There was an error adding the class." })
+//   }) 
+// })
+
+
+//Couldn't figure out this one yet
+// //USER can delete a class from account
+// router.delete('/:id/schedule/:id', (req, res) => {
+//   const { id } = req.params
+//   Schedules.removeScheduledClass(id)
+//   .then( deleteClass => {
+//     res.status(204).json({ deleteClass, message: "Class deleted."})
+//   })
+//   .catch(error => {
+//     console.log(error.message)
+//     res.status(500).json({ error, message: "There was an error deleting the class."})
+//   })
+// })
+
+
 
 
 //middleware validation WORKS

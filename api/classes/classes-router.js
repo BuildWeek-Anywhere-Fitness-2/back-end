@@ -4,8 +4,7 @@ const router = require('express').Router()
 const Classes = require('../classes/classes-model.js');
 
 
-//add a class WORKS (sorta says it doesn't create it but it is there)
-//tried removing validation but same result
+//add a class WORKS
 router.post('/', validateClass, (req, res, next) => {
   const classData = req.body
   Classes.insert(classData)
@@ -92,7 +91,7 @@ function validateClass(req, res, next) {
     next();
 };
 
-//need to fix???
+
 function validateClassById(req, res, next) {
   Classes.findById(req.params.id)
   .then(resource => {
