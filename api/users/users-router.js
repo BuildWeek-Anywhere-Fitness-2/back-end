@@ -2,7 +2,7 @@ require('dotenv').config()
 const router = require('express').Router();
 
 const Users = require("./users-model.js");
-const Classes = require('../classes/classes-model.js')
+//const Classes = require('../classes/classes-model.js')
 const Schedules = require('../schedules/schedules-model')
 
 //add a user WORKS
