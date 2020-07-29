@@ -34,7 +34,7 @@ router.get("/", (req, res) => {
 router.get('/:id', validateUserId, (req,res) => {
   Users.findById(req.params.id)
   .then(user => {
-    res.status(200).json({users, jwt: req.jwt })
+    res.status(200).json({user, jwt: req.jwt })
   })
   .catch(error => {
     console.log(error)
