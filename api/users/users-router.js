@@ -81,34 +81,38 @@ router.get('/:id/schedule', (req,res) => {
 })
 
 
-
+//Couldn't figure out this one yet
 //USER can add a class to their account
-router.post('/:id/schedule', (req, res) => {
-  const userId = req.params.id
-  //const { trainer_id, class_id } = req.body //pull trainer id and class id with get request and programtically put it in there 
-  req.body.userId = userId //all params in 
-  Schedules.addClassSchedule(req.body)
-  .then( newClass => {
-    res.status(201).json({ newClass, message: "Class added" })
-  })
-  .catch( error => {
-    console.log(error.message)
-    res.status(500).json({ error, message: "There was an error adding the class." })
-  }) 
-})
+// router.post('/:id/schedule', (req, res) => {
+//   const userId = req.params.id
+//   //const { trainer_id, class_id } = req.body //pull trainer id and class id with get request and programtically put it in there 
+//   req.body.userId = userId //all params in 
+//   Schedules.addClassSchedule(req.body)
+//   .then( newClass => {
+//     res.status(201).json({ newClass, message: "Class added" })
+//   })
+//   .catch( error => {
+//     console.log(error.message)
+//     res.status(500).json({ error, message: "There was an error adding the class." })
+//   }) 
+// })
 
-//USER can delete a class from account
-router.delete('/:id/schedule/:id', (req, res) => {
-  const { id } = req.params
-  Schedules.removeScheduledClass(id)
-  .then( deleteClass => {
-    res.status(204).json({ deleteClass, message: "Class deleted."})
-  })
-  .catch(error => {
-    console.log(error.message)
-    res.status(500).json({ error, message: "There was an error deleting the class."})
-  })
-})
+
+//Couldn't figure out this one yet
+// //USER can delete a class from account
+// router.delete('/:id/schedule/:id', (req, res) => {
+//   const { id } = req.params
+//   Schedules.removeScheduledClass(id)
+//   .then( deleteClass => {
+//     res.status(204).json({ deleteClass, message: "Class deleted."})
+//   })
+//   .catch(error => {
+//     console.log(error.message)
+//     res.status(500).json({ error, message: "There was an error deleting the class."})
+//   })
+// })
+
+
 
 
 //middleware validation WORKS

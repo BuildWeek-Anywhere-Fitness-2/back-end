@@ -15,10 +15,10 @@ const restricted =require('./auth/authenticate-middleware')
 
 //add all API endpoints
 apiRouter.use("/auth", authRouter)
-apiRouter.use('/classes', /*restricted,*/ classesRouter) //add restricted
-apiRouter.use('/trainers', /*restricted,*/  trainersRouter) //add restricted
-apiRouter.use('/users', /*restricted,*/  usersRouter)//add restricted
-apiRouter.use('/schedules', schedulesRouter)//add restricted
+apiRouter.use('/classes', restricted, classesRouter) //add restricted
+apiRouter.use('/trainers', restricted,  trainersRouter) //add restricted
+apiRouter.use('/users', restricted,  usersRouter)//add restricted
+apiRouter.use('/schedules', schedulesRouter)
 
 
 apiRouter.get("/", (req, res) => {

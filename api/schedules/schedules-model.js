@@ -31,6 +31,7 @@ function findById(id) {
   .where({ 'schedules.id': id }).first();
 };
 
+//work on these another day when I figure it out
 //add a new class to schedule
 //get the schedule db
 //add a class from classes db
@@ -41,6 +42,7 @@ function addClassSchedule(newClass){
   .insert(newClass, 
     ['id', 'class_id', 'trainer_id', 'user_id'])
 };
+
 
 //update schedule
 function update(id, changes) {
