@@ -9,7 +9,7 @@ module.exports = {
   remove
 };
 
-//get schedules list
+//get schedules list to show with name and classes
 function find() {
   return db('schedules')
   .join('classes',  'schedules.class_id', 'classes.id')
