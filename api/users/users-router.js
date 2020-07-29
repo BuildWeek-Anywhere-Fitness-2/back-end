@@ -3,6 +3,7 @@ const router = require('express').Router();
 
 const Users = require("./users-model.js");
 const Classes = require('../classes/classes-model.js')
+const Schedules = require('../schedules/schedules-model')
 
 //add a user WORKS
 router.post('/registeruser', validateUser, (req, res) => {
@@ -67,8 +68,7 @@ router.delete("/:id", validateUserId, (req, res) =>{
 });
 
 //USER can see their class list
-
-router.get('/:id/classes', req,res => {
+router.get('/:id/classes', (req,res) => {
   Users.getClassesById(req.params.id)
   .then(classes => {
     !classes[0] ? res.status(404).json({ message: "User with that ID does not exist" }):
@@ -79,9 +79,34 @@ router.get('/:id/classes', req,res => {
     res.status(500).json({ message: "Information could not be found", error: error.message })
   })
 })
-//USER can add a class to their account
 
-//USER can delete a class freir account
+//USER can add a class to their account
+router.post('/:id/classes', (req, res) => {
+  const userId = req.params.id
+  //const { trainer_id, class_id } = req.body //pull trainer id and class id with get request and programtically put it in there 
+  req.body.userId = userId //all params in 
+  Schedules.addClasses(req.body)
+  .then( newClass => {
+    res.status(201).json({ newClass, message: "Class added" })
+  })
+  .catch( error => {
+    console.log(error.message)
+    res.status(500).json({ error, message: "There was an error adding the class." })
+  }) 
+})
+
+//USER can delete a class from account
+router.delete('/userId/classes/:id', (req, res) => {
+  const { id } = req.params
+  Schedules.remove(id)
+  .then( deleteClass => {
+    res.status(204).json({ deleteClass, message: "Class deleted."})
+  })
+  .catch(error => {
+    console.log(error.message)
+    res.status(500).json({ error, message: "There was an error deleting the class."})
+  })
+})
 
 
 //middleware validation WORKS

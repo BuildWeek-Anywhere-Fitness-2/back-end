@@ -6,6 +6,7 @@ module.exports = {
  findById,
  findClasses,
  getClassesById,
+ addClass,
  insert,
  update,
  remove
@@ -54,4 +55,10 @@ function remove(id) {
 
 function getClassesById(id) {
   return db('classes').select("id", "name").where({userId: id});
+}
+
+//user add class
+
+function addClass(id) {
+  return db('users').where({ id }).insert('')
 }

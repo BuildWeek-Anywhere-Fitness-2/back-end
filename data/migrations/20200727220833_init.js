@@ -22,15 +22,10 @@ exports.up = function(knex) {
     tbl.text('start', 7).notNullable();
     tbl.text('end', 7).notNullable();
     tbl.integer('trainer_id')// trainer id auto incremented
+      .notNullable() //trainer_id needs to be added
       .unsigned()
       .references('id')
       .inTable('trainers')
-      .onDelete('CASCADE')
-      .onUpdate('CASCADE')
-    tbl.integer('user_id')// trainer id auto incremented
-      .unsigned()
-      .references('id')
-      .inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
   })
@@ -42,6 +37,9 @@ exports.up = function(knex) {
   })
   
 };
+
+//User adds class to schedule inserting (db schedule)
+//db classes for the user to access classes ( db classes) give cl
 
 exports.down = function(knex) {
   return knex.schema
