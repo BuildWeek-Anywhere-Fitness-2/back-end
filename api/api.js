@@ -22,6 +22,6 @@ apiRouter.use('/schedules', schedulesRouter)
 
 
 apiRouter.get("/", (req, res) => {
-    res.status(200).json({message: "available endpoints, classes, trainers, users, auth, schedules", error: false})
+    res.status(200).json({message: "available endpoints, classes, trainers, users, auth", error: false})
 })
 module.exports = apiRouter
