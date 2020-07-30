@@ -1,77 +1,23 @@
-//import what I need
-
 const auth = require('../auth/auth-router.js')
 const request = require('supertest')
 const server = require('../../server.js');
 
+//authorization token for other tests
+/*  https://blog.stvmlbrn.com/2018/06/18/test-jwt-authenticated-express-routes-with-jest-and-supertest.html */
+let token;
 
-
-//Dummy lists
-
-const trainers = [
-  {
-    id: 1,
-    name: 'trainertest1',
-    password: 'abcde',
-    email: 'trainer@test.com',
-    bio: 'bio here'
-  },
-  {
-    id: 2,
-    name: 'trainertest2',
-    password: 'abcd',
-    email: 'trainer2@test.com',
-  },
-  {
-    id: 3,
-    name: 'trainertest3',
-    password: 'abcde',
-    email: 'trainer3@test.com',
-    bio: null
-  },
-];
-
-const classes = [
-  {
-    id: 1,
-    name: 'test class',
-    description: 'description here',
-    start: '5PM',
-    end: '6PM',
-    trainer_id: 2
-  },
-  {
-    id: 2,
-    name: 'test class2',
-    description: 'description 2 here',
-    start: '5PM',
-    end: '6PM',
-    trainer_id: null
-  },
-];
-
-const schedules = [
-  {
-    id: 1,
-    name: 'test class',
-    description: 'description here',
-    start: '5PM',
-    end: '6PM',
-    trainer_id: 2
-  },
-  {
-    id: 2,
-    name: 'test class2',
-    description: 'description 2 here',
-    start: '5PM',
-    end: '6PM',
-    trainer_id: 3
-  },
-]
-
+beforeAll( done => {
+  request(server)
+  .post('/api/auth/trainerlogin')
+  .send({ name: 'testtrainertest', password: 'asdf' })
+  .then( res => {
+    token = res.body.token; //saves auth token
+    done();
+  })
+})
 /* -*_*_*_*_*_API_*_*_*_*_*_*- */ //passes
 
-describe('apiRouter and server', () => {
+describe('GET apiRouter and server', () => {
   test('server success', () => {
     return request(server)
     .get('/')
@@ -90,10 +36,10 @@ describe('apiRouter and server', () => {
 })
 
 /* -*_*_*_*_* SCHEDULES *_*_*_*_*_*- */ //passes
-describe('schedules', () => {
+describe('GET schedules', () => {
   test('anyone can see scheduled classes', () => {
     return request(server)
-    .get('/schedules')
+    .get('/api/schedules')
     .then(res => {
       expect(res.status).toBe(200)
     })
@@ -101,7 +47,7 @@ describe('schedules', () => {
   test('get schedule by schedule id', () => {
     return request(server)
     .get('/api/schedules/')
-    .send(schedules[2])
+    .send('/api/schedules/2')
     .then(res => {
       expect(res.status).toBe(200)
       expect(res.type).toMatch(/json/i)
@@ -110,7 +56,7 @@ describe('schedules', () => {
 })
 
 /* -*_*_*_*_* AUTH *_*_*_*_*_*- */ //passes
-describe('not authorized', () => {
+describe('GET not authorized', () => {
   test('not auth users',() => {
     return request(server)
     .get('/api/users')
@@ -131,7 +77,7 @@ describe('not authorized', () => {
 })
 
 /* -*_*_*_*_* USERS / TRAINERS LOGIN (SAME) *_*_*_*_*_*- */
-describe('register user/trainer', () => { //added skip to avoid fail because aaounts must be unique
+describe('POST register user/trainer', () => { //added skip to avoid fail because aaounts must be unique
   test.skip('new user', () => { 
     return request(server)
     .post('/api/auth/registeruser')
@@ -167,7 +113,7 @@ describe('register user/trainer', () => { //added skip to avoid fail because aao
 
 })
 
-describe('Login user/trainer', () => { //passes
+describe('POST Login user/trainer', () => { //passes
   test('user login', ()=> {
     return request(server)
     .post('/api/auth/userlogin')
@@ -186,16 +132,47 @@ describe('Login user/trainer', () => { //passes
   })
 })
 
-describe('Update user/trainer', () => {
-  test.todo('update profile user/trainer')
-  test.todo('users can see schedule by id')
+describe('PUT Update trainer', () => { //passes
+  test('update profile trainer', () => {
+    return request(server)
+    .put('/api/trainers/4')
+    .set('Authorization', token)
+    .send({ bio: 'update test bio'})
+    .then(res => {
+      expect(res.status).toBe(200)
+    })
+  })
 })
 
 /* -*_*_*_*_* TRAINERS / CLASSES *_*_*_*_*_*- */
-describe('trainer and classes', () => {
-  test.todo('add a new class')
-  test.todo('update a class')
-  test.todo('delete a class')
+describe('PUT & DEL trainer and classes', () => {//add skip because classname must be unique
+  test.skip('trainer can make a new class', () => {
+    return request(server)
+    .post('/api/classes')
+    .set('Authorization', token)
+    .send({ name: 'addClassTest3', description: 'a test', start: '5pm', end:'6pm', trainer_id: 2 })
+    .then(res => {
+      expect(res.status).toBe(201)
+    })
+  })
+  test('PUT trainer can update a class', () => {
+    return request(server)
+    .put('/api/classes/3')
+    .set('Authorization', token)
+    .send({ description: 'updated description test' })
+    .then( res => {
+      expect(res.status).toBe(200)
+    })
+  })
+  test.skip('DEL trainer can delete a class', () => {
+    return request(server)
+    .delete('/api/classes/27') //might have to add +1
+    .set('Authorization', token)
+    .then( res => {
+      expect(res.status).toBe(204)
+    })
+
+  })
 })
 
 
