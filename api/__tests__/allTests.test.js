@@ -101,7 +101,7 @@ const schedules = [
   },
 ]
 
-/* -*_*_*_*_*_API_*_*_*_*_*_*- */
+/* -*_*_*_*_*_API_*_*_*_*_*_*- */ //passes
 
 describe('apiRouter and server', () => {
   test('server success', () => {
@@ -121,17 +121,47 @@ describe('apiRouter and server', () => {
   });
 })
 
-/* -*_*_*_*_* SCHEDULES *_*_*_*_*_*- */
-describe('view schedules', () => {
-  test.todo('anyone can see scheduled classes')
-  test.todo('get schedule by id')
+/* -*_*_*_*_* SCHEDULES *_*_*_*_*_*- */ //passes
+describe('schedules', () => {
+  test('anyone can see scheduled classes', () => {
+    return supertest(server)
+    .get('/schedules')
+    .then(res => {
+      expect(res.status).toBe(200)
+    })
+  })
+  test('get schedule by schedule id', () => {
+    return supertest(server)
+    .get('/api/schedules/')
+    .send(schedules[2])
+    .then(res => {
+      expect(res.status).toBe(200)
+      expect(res.type).toMatch(/json/i)
+    })
+  })
 })
 
 
 
 /* -*_*_*_*_* AUTH *_*_*_*_*_*- */
 describe('not authorized', () => {
-  test.todo('not auth message')
+  test('not auth users',() => {
+    return supertest(server)
+    .get('/api/users')
+    .then( res => {
+      expect(res.status).toBe(401)
+      expect(res.type).toMatch(/json/i)
+      expect({message: "Your credentials are not valid."})
+    })
+  })
+  test('not auth trainers', () => {
+    return supertest(server)
+    .get('/api/trainers')
+    .then( res => {
+      expect(res.status).toBe(401)
+      expect({message: "Your credentials are not valid."})
+    })
+  })
 })
 
 /* -*_*_*_*_* USERS / TRAINERS LOGIN (SAME) *_*_*_*_*_*- */
