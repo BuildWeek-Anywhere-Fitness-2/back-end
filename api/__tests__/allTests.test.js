@@ -135,11 +135,19 @@ describe('register user/trainer', () => {
   test.skip('new user', () => { //will fail if run twice because needs to be unique
     return request(server)
     .post('/api/auth/registeruser')
+    .send({ username: 'testusertest', password: 'abcde', email: 'email@email.com' })
+    .then(res => {
+      expect(res.status).toBe(201);
+    });
 
   })
   test.skip('new trainer', () => {
     return request(server)
     .post('/api/auth/registertrainer')
+    .send({ name: 'testtrainertest', password: 'asdf', email: 'trainer@email.com' })
+    .then(res => {
+      expect(res.status).toBe(201);
+    })
   })
 
 })
