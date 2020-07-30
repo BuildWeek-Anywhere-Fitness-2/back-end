@@ -67,7 +67,7 @@ router.post('/userlogin', (req, res) => {
   if (isUserValid(req.body)) {
     Users.findBy({ username: username })
     .then(([user]) => {
-      console.log('user', user);
+      
       if(user && bcryptjs.compareSync(password, user.password)) {
         const token = makeToken(user); //make new token for user
 
@@ -92,7 +92,7 @@ router.post('/trainerlogin', (req, res) => {
   if (isTrainerValid(req.body)) {
     Trainers.findBy({ name: name })
     .then(([trainer]) => {
-      console.log('trainer', trainer);
+      
       if(trainer && bcryptjs.compareSync(password, trainer.password)) {
         const token = makeJwt(trainer); //make new token for trainer
 

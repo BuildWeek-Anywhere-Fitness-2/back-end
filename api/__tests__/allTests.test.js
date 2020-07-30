@@ -131,8 +131,8 @@ describe('not authorized', () => {
 })
 
 /* -*_*_*_*_* USERS / TRAINERS LOGIN (SAME) *_*_*_*_*_*- */
-describe('register user/trainer', () => { 
-  test.skip('new user', () => { //will fail if run twice because needs to be unique
+describe('register user/trainer', () => { //added skip to avoid fail because aaounts must be unique
+  test.skip('new user', () => { 
     return request(server)
     .post('/api/auth/registeruser')
     .send({ username: 'testusertest', password: 'abcde', email: 'email@email.com' })
@@ -148,14 +148,42 @@ describe('register user/trainer', () => {
     .then(res => {
       expect(res.status).toBe(201);
     })
+  });
+  test('duplicate user name, error 500',() => {
+    return request(server)
+    .post('/api/auth/registeruser')
+    .send({ username: 'testusertest', password: 'abcde', email: 'email2@email.com' })
+    .then( res => {
+      expect(res.status).toBe(500)
+    })
   })
+  test('duplicate trainer email, error 500', () => {
+    return request(server)
+    .post('/api/auth/registertrainer')
+    .send({ name: 'testtrainertest2', password: 'asdf', email: 'trainer@email.com' })
+    .then(res => 
+      expect(res.status).toBe(500))
+  });
 
 })
 
-describe('Login user/trainer', () => {
-  test.todo('add a new class')
-  test.todo('update a class')
-  test.todo('delete a class')
+describe('Login user/trainer', () => { //passes
+  test('user login', ()=> {
+    return request(server)
+    .post('/api/auth/userlogin')
+    .send({ username: 'testusertest', password: 'abcde' })
+    .then(res => {
+      expect(res.status).toBe(200)
+    })
+  })
+  test('trainer login', () => {
+    return request(server)
+    .post('/api/auth/trainerlogin')
+    .send({ name: 'testtrainertest', password: 'asdf' })
+    .then(res => {
+      expect(res.status).toBe(200)
+    })
+  })
 })
 
 describe('Update user/trainer', () => {
