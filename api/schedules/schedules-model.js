@@ -31,14 +31,14 @@ function findById(id) {
   .where({ 'schedules.id': id }).first();
 };
 
-//work on these another day when I figure it out
+//work on these another day when I figure it out -- all Below this point
 //add a new class to schedule
 //get the schedule db
 //add a class from classes db
 // need to pull trainer id and class id before the form opens adding class (async)
 //react -> search for classes --> click on classes you want -->pull data from class --> get class_id and trainer_id (should be done before form opens)--> when form opens to add class, program into req.body to have trainer id and class id, possibly pulled from redux state --> then they can sign up
 function addClassSchedule(newClass){
-  return db('schedule')
+  return db('schedules')
   .insert(newClass, 
     ['id', 'class_id', 'trainer_id', 'user_id'])
 };
