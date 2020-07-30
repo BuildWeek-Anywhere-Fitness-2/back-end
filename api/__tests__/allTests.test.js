@@ -3,6 +3,8 @@
 const auth = require('../auth/auth-router.js')
 const supertest = require('supertest')
 const server = require('../../server.js');
+const { expectCt } = require('helmet');
+const { get } = require('../auth/auth-router.js');
 
 
 //have an array of a dummy list of users, trainers, classes, schedules
@@ -101,8 +103,22 @@ const schedules = [
 
 /* -*_*_*_*_*_API_*_*_*_*_*_*- */
 
-describe('api is up', () => {
-  test.todo('api success message')
+describe('apiRouter and server', () => {
+  test('server success', () => {
+    return supertest(server)
+    .get('/')
+    .then((res) => {
+      expect(res.status).toBe(200)
+    })
+  });
+  test('api is up', () => {
+    return supertest(server)
+    .get('/api/')
+    .then(res => {
+      expect(res.status).toBe(200)
+      expect(res.type).toMatch(/json/i)
+    })
+  });
 })
 
 /* -*_*_*_*_* SCHEDULES *_*_*_*_*_*- */
