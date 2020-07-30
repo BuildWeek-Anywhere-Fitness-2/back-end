@@ -1,44 +1,12 @@
 //import what I need
 
 const auth = require('../auth/auth-router.js')
-const supertest = require('supertest')
+const request = require('supertest')
 const server = require('../../server.js');
-const { expectCt } = require('helmet');
-const { get } = require('../auth/auth-router.js');
 
 
-//have an array of a dummy list of users, trainers, classes, schedules
 
-const users = [
-  {
-    id: 1,
-    username: 'usertest1',
-    password: 'abcde',
-    email: 'user@test.com',
-    bio: 'bio here',
-    schedule: {
-        class1: "class 1",
-        class2: "class2",
-    }
-  
-  },
-  {
-    id: 2,
-    username: 'usertest2',
-    password: 'abcd',
-    email: 'user2@test.com',
-    schedule: {
-      class1: "class 1",
-  }
-  },
-  {
-    id: 3,
-    username: 'usertest3',
-    password: 'abcde',
-    email: 'user@test.com',
-    schedule: {}
-  },
-];
+//Dummy lists
 
 const trainers = [
   {
@@ -105,14 +73,14 @@ const schedules = [
 
 describe('apiRouter and server', () => {
   test('server success', () => {
-    return supertest(server)
+    return request(server)
     .get('/')
     .then((res) => {
       expect(res.status).toBe(200)
     })
   });
   test('api is up', () => {
-    return supertest(server)
+    return request(server)
     .get('/api/')
     .then(res => {
       expect(res.status).toBe(200)
@@ -124,14 +92,14 @@ describe('apiRouter and server', () => {
 /* -*_*_*_*_* SCHEDULES *_*_*_*_*_*- */ //passes
 describe('schedules', () => {
   test('anyone can see scheduled classes', () => {
-    return supertest(server)
+    return request(server)
     .get('/schedules')
     .then(res => {
       expect(res.status).toBe(200)
     })
   })
   test('get schedule by schedule id', () => {
-    return supertest(server)
+    return request(server)
     .get('/api/schedules/')
     .send(schedules[2])
     .then(res => {
@@ -141,12 +109,10 @@ describe('schedules', () => {
   })
 })
 
-
-
-/* -*_*_*_*_* AUTH *_*_*_*_*_*- */
+/* -*_*_*_*_* AUTH *_*_*_*_*_*- */ //passes
 describe('not authorized', () => {
   test('not auth users',() => {
-    return supertest(server)
+    return request(server)
     .get('/api/users')
     .then( res => {
       expect(res.status).toBe(401)
@@ -155,7 +121,7 @@ describe('not authorized', () => {
     })
   })
   test('not auth trainers', () => {
-    return supertest(server)
+    return request(server)
     .get('/api/trainers')
     .then( res => {
       expect(res.status).toBe(401)
@@ -165,10 +131,26 @@ describe('not authorized', () => {
 })
 
 /* -*_*_*_*_* USERS / TRAINERS LOGIN (SAME) *_*_*_*_*_*- */
-describe('register user/trainer', () => {
-  test.todo('make new user/trainer')
-  test.todo('login user/trainer success')
-  test.todo('not unique username/email fail message')
+describe('register user/trainer', () => { 
+  test.skip('new user', () => { //will fail if run twice because needs to be unique
+    return request(server)
+    .post('/api/auth/registeruser')
+
+  })
+  test.skip('new trainer', () => {
+    return request(server)
+    .post('/api/auth/registertrainer')
+  })
+
+})
+
+describe('Login user/trainer', () => {
+  test.todo('add a new class')
+  test.todo('update a class')
+  test.todo('delete a class')
+})
+
+describe('Update user/trainer', () => {
   test.todo('update profile user/trainer')
   test.todo('users can see schedule by id')
 })

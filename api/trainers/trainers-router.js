@@ -5,7 +5,7 @@ const Trainers = require('../trainers/trainers-model.js')
 const Classes = require('../classes/classes-model.js')
 
 //add trainer WORKS (sorta...says it doesn't but it is created)
-router.post('/register',  validateTrainer, (req, res) => {
+router.post('/registertrainer',  validateTrainer, (req, res) => {
   const trainerData = req.body
   Trainers.insert(trainerData)
   .then(result => {
